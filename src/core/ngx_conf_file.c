@@ -174,29 +174,21 @@ ngx_conf_parse(ngx_conf_t *cf, ngx_str_t *filename)
 #endif
 
     if (filename) {
-
         /* open configuration file */
-
         fd = ngx_open_file(filename->data, NGX_FILE_RDONLY, NGX_FILE_OPEN, 0);
-
         if (fd == NGX_INVALID_FILE) {
             ngx_conf_log_error(NGX_LOG_EMERG, cf, ngx_errno,
                                ngx_open_file_n " \"%s\" failed",
                                filename->data);
             return NGX_CONF_ERROR;
         }
-
         prev = cf->conf_file;
-
         cf->conf_file = &conf_file;
-
         if (ngx_fd_info(fd, &cf->conf_file->file.info) == NGX_FILE_ERROR) {
             ngx_log_error(NGX_LOG_EMERG, cf->log, ngx_errno,
                           ngx_fd_info_n " \"%s\" failed", filename->data);
         }
-
         cf->conf_file->buffer = &buf;
-
         buf.start = ngx_alloc(NGX_CONF_BUFFER, cf->log);
         if (buf.start == NULL) {
             goto failed;
@@ -240,6 +232,7 @@ ngx_conf_parse(ngx_conf_t *cf, ngx_str_t *filename)
 
 
     for ( ;; ) {
+        /* get one command */
         rc = ngx_conf_read_token(cf);
 
         /*
@@ -250,7 +243,6 @@ ngx_conf_parse(ngx_conf_t *cf, ngx_str_t *filename)
          *    NGX_CONF_BLOCK_START  the token terminated by "{" was found
          *    NGX_CONF_BLOCK_DONE   the "}" was found
          *    NGX_CONF_FILE_DONE    the configuration file is done
-         */
 
         if (rc == NGX_ERROR) {
             goto done;

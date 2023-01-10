@@ -350,7 +350,7 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
         goto failed;
     }
 
-
+    /* create some temp dir on nginx */
     if (ngx_create_paths(cycle, ccf->user) != NGX_OK) {
         goto failed;
     }

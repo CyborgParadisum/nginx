@@ -3,3 +3,8 @@
 /cmake-build-*
 /objs
 /Makefile
+
+
+/venv/usr/local/nginx/logs
+/venv/usr/local/nginx/sbin/nginx.old
+/nginx

@@ -223,7 +223,7 @@ main(int argc, char *const *argv)
     /* TODO */ ngx_max_sockets = -1;
 
     ngx_time_init();
-
+    printf("ngx_cached_http_time = %s\n", ngx_cached_http_time.data);
 #if (NGX_PCRE)
     ngx_regex_init();
 #endif
@@ -259,10 +259,12 @@ main(int argc, char *const *argv)
         return 1;
     }
 
+    /* set config file path */
     if (ngx_process_options(&init_cycle) != NGX_OK) {
         return 1;
     }
 
+    /* 不同系统差异太大了 */
     if (ngx_os_init(log) != NGX_OK) {
         return 1;
     }
@@ -281,6 +283,7 @@ main(int argc, char *const *argv)
 
     ngx_slab_sizes_init();
 
+    // todo ?
     if (ngx_add_inherited_sockets(&init_cycle) != NGX_OK) {
         return 1;
     }
@@ -993,6 +996,9 @@ ngx_process_options(ngx_cycle_t *cycle)
 
 #endif
     }
+
+    printf("cycle->conf_prefix: %s\n",cycle->conf_prefix.data);
+    printf("cycle->prefix: %s\n",cycle->prefix.data);
 
     if (ngx_conf_file) {
         cycle->conf_file.len = ngx_strlen(ngx_conf_file);

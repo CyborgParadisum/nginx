@@ -426,10 +426,8 @@ ngx_open_listening_sockets(ngx_cycle_t *cycle)
         failed = 0;
 
         /* for each listening socket */
-
         ls = cycle->listening.elts;
         for (i = 0; i < cycle->listening.nelts; i++) {
-
             if (ls[i].ignore) {
                 continue;
             }
