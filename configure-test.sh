@@ -9,3 +9,6 @@ test_prefix=$current/venv/
 --without-http_gzip_module \
 --with-debug \
 
+#--with-cc-opt=" -Wno-unused-label
+#                -Wno-unused-but-set-variable" \
+

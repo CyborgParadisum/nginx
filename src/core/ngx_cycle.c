@@ -34,7 +34,10 @@ ngx_uint_t             ngx_quiet_mode;
 static ngx_connection_t  dumb;
 /* STUB */
 
-
+/**
+ * cycle is important.
+ *
+ * */
 ngx_cycle_t *
 ngx_init_cycle(ngx_cycle_t *old_cycle)
 {
@@ -281,6 +284,7 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
         return NULL;
     }
 
+    /* !![import] parse config and set config */
     if (ngx_conf_parse(&conf, &cycle->conf_file) != NGX_CONF_OK) {
         environ = senv;
         ngx_destroy_cycle_pools(&conf);
@@ -1051,6 +1055,7 @@ ngx_create_pidfile(ngx_str_t *name, ngx_log_t *log)
         if (ngx_write_file(&file, pid, len, 0) == NGX_ERROR) {
             rc = NGX_ERROR;
         }
+        printf("pid: %s %d\n", file.name.data, ngx_pid);
     }
 
     if (ngx_close_file(file.fd) == NGX_FILE_ERROR) {

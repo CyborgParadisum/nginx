@@ -5,7 +5,10 @@ set(CMAKE_CXX_STANDARD 14)
 
 
 add_custom_target(Debug ALL
-        COMMAND ln -sf ${CMAKE_CURRENT_BINARY_DIR}/nginx ${CMAKE_CURRENT_BINARY_DIR}/../nginx
+        COMMAND rm -f ${CMAKE_CURRENT_BINARY_DIR}/../nginx &&
+                ln -sf ${CMAKE_CURRENT_BINARY_DIR}/nginx ${CMAKE_CURRENT_BINARY_DIR}/../nginx &&
+                echo ${CMAKE_CURRENT_BINARY_DIR}/../nginx
+        COMMAND make -C ../ mkdir
         )
 include(objs/CMakeLists.txt)
 

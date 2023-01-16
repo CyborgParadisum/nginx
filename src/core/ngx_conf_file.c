@@ -243,6 +243,7 @@ ngx_conf_parse(ngx_conf_t *cf, ngx_str_t *filename)
          *    NGX_CONF_BLOCK_START  the token terminated by "{" was found
          *    NGX_CONF_BLOCK_DONE   the "}" was found
          *    NGX_CONF_FILE_DONE    the configuration file is done
+         */
 
         if (rc == NGX_ERROR) {
             goto done;
@@ -307,7 +308,7 @@ ngx_conf_parse(ngx_conf_t *cf, ngx_str_t *filename)
             goto failed;
         }
 
-
+        printf("ngx_conf_handler cmd: %s\n",((ngx_str_t*)cf->args->elts)->data);
         rc = ngx_conf_handler(cf, rc);
 
         if (rc == NGX_ERROR) {
@@ -451,7 +452,7 @@ ngx_conf_handler(ngx_conf_t *cf, ngx_int_t last)
                     conf = confp[cf->cycle->modules[i]->ctx_index];
                 }
             }
-
+            // ngx_conf_set_flag_slot
             rv = cmd->set(cf, cmd, conf);
 
             if (rv == NGX_CONF_OK) {
@@ -1013,14 +1014,14 @@ ngx_conf_log_error(ngx_uint_t level, ngx_conf_t *cf, ngx_err_t err,
                   cf->conf_file->file.name.data, cf->conf_file->line);
 }
 
-
+/**  exec conf what type is flag  */
 char *
 ngx_conf_set_flag_slot(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 {
     char  *p = conf;
 
     ngx_str_t        *value;
-    ngx_flag_t       *fp;
+    ngx_flag_t       *fp;  // flag: 0/1
     ngx_conf_post_t  *post;
 
     fp = (ngx_flag_t *) (p + cmd->offset);
